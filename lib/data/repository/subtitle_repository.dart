@@ -10,8 +10,9 @@ abstract class SubtitleRepository {
 }
 
 class SubtitleDataRepository extends SubtitleRepository {
-  SubtitleDataRepository({required this.subtitleController});
+  SubtitleDataRepository({required this.subtitleController, this.headers});
   final SubtitleController subtitleController;
+  final Map<String, String>? headers;
 
   // Gets the subtitle content type.
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {
@@ -65,6 +66,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     try {
       final response = await http.get(
         Uri.parse(subtitleUrl),
+        headers: headers,
       );
 
       // Lets check if the request was successful.
@@ -187,7 +189,8 @@ class SubtitleDataRepository extends SubtitleRepository {
   }
 
   // Extract the encoding type from the headers.
-  Encoding _encodingForHeaders(Map<String, String> headers) => encodingForCharset(
+  Encoding _encodingForHeaders(Map<String, String> headers) =>
+      encodingForCharset(
         _contentTypeForHeaders(headers).parameters['charset'],
       );
 

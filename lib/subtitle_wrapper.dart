@@ -12,7 +12,9 @@ class SubtitleWrapper extends StatelessWidget {
     super.key,
     this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
+    this.headers,
   });
+  final Map<String, String>? headers;
   final Widget videoChild;
   final SubtitleController subtitleController;
   final VideoPlayerController videoPlayerController;
@@ -34,6 +36,7 @@ class SubtitleWrapper extends StatelessWidget {
               create: (context) => SubtitleBloc(
                 videoPlayerController: videoPlayerController,
                 subtitleRepository: SubtitleDataRepository(
+                  headers: headers,
                   subtitleController: subtitleController,
                 ),
                 subtitleController: subtitleController,
