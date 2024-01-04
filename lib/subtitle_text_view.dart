@@ -15,17 +15,13 @@ class SubtitleTextView extends StatelessWidget {
 
   TextStyle get _textStyle {
     return subtitleStyle.hasBorder
-        ? TextStyle(
-            fontSize: subtitleStyle.fontSize,
+        ? subtitleStyle.textStyle.copyWith(
             foreground: Paint()
               ..style = subtitleStyle.borderStyle.style
               ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
               ..color = subtitleStyle.borderStyle.color,
           )
-        : TextStyle(
-            fontSize: subtitleStyle.fontSize,
-            color: subtitleStyle.textColor,
-          );
+        : subtitleStyle.textStyle;
   }
 
   @override
@@ -60,10 +56,7 @@ class SubtitleTextView extends StatelessWidget {
                     color: backgroundColor,
                     child: _TextContent(
                       text: state.subtitle!.text,
-                      textStyle: TextStyle(
-                        color: subtitleStyle.textColor,
-                        fontSize: subtitleStyle.fontSize,
-                      ),
+                      textStyle: subtitleStyle.textStyle,
                     ),
                   ),
                 ),

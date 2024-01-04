@@ -7,13 +7,12 @@ class SubtitleStyle {
   const SubtitleStyle({
     this.hasBorder = false,
     this.borderStyle = const SubtitleBorderStyle(),
-    this.fontSize = _defaultFontSize,
-    this.textColor = Colors.black,
+    this.textStyle =
+        const TextStyle(fontSize: _defaultFontSize, color: Colors.black),
     this.position = const SubtitlePosition(),
   });
   final bool hasBorder;
   final SubtitleBorderStyle borderStyle;
-  final double fontSize;
-  final Color textColor;
+  final TextStyle textStyle;
   final SubtitlePosition position;
 }
