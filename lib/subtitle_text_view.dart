@@ -15,12 +15,24 @@ class SubtitleTextView extends StatelessWidget {
 
   TextStyle get _textStyle {
     return subtitleStyle.hasBorder
-        ? subtitleStyle.textStyle.copyWith(
-            foreground: Paint()
-              ..style = subtitleStyle.borderStyle.style
-              ..strokeWidth = subtitleStyle.borderStyle.strokeWidth
-              ..color = subtitleStyle.borderStyle.color,
-          )
+        ? subtitleStyle.textStyle.copyWith(shadows: [
+            Shadow(
+                color: subtitleStyle.borderStyle.color,
+                offset: Offset(-subtitleStyle.borderStyle.strokeWidth,
+                    -subtitleStyle.borderStyle.strokeWidth)),
+            Shadow(
+                color: subtitleStyle.borderStyle.color,
+                offset: Offset(-subtitleStyle.borderStyle.strokeWidth,
+                    subtitleStyle.borderStyle.strokeWidth)),
+            Shadow(
+                color: subtitleStyle.borderStyle.color,
+                offset: Offset(subtitleStyle.borderStyle.strokeWidth,
+                    -subtitleStyle.borderStyle.strokeWidth)),
+            Shadow(
+                color: subtitleStyle.borderStyle.color,
+                offset: Offset(subtitleStyle.borderStyle.strokeWidth,
+                    subtitleStyle.borderStyle.strokeWidth)),
+          ])
         : subtitleStyle.textStyle;
   }
 
@@ -42,28 +54,14 @@ class SubtitleTextView extends StatelessWidget {
           if (!state.showSubtitle) {
             return const SizedBox();
           }
-          return Stack(
-            children: <Widget>[
-              Center(
-                child: Container(
-                  color: backgroundColor,
-                  child: _TextContent(
-                    text: state.subtitle!.text,
-                    textStyle: _textStyle,
-                  ),
-                ),
+          return Center(
+            child: Container(
+              color: backgroundColor,
+              child: _TextContent(
+                text: state.subtitle!.text,
+                textStyle: _textStyle,
               ),
-              if (subtitleStyle.hasBorder)
-                Center(
-                  child: Container(
-                    color: backgroundColor,
-                    child: _TextContent(
-                      text: state.subtitle!.text,
-                      textStyle: subtitleStyle.textStyle,
-                    ),
-                  ),
-                ),
-            ],
+            ),
           );
         }
         return const SizedBox();
