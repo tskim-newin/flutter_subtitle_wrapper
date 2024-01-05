@@ -39,6 +39,11 @@ class SubtitleTextView extends StatelessWidget {
       listener: subtitleBlocListener,
       builder: (context, state) {
         if (state is LoadedSubtitle && state.subtitle != null) {
+          if (!state.showSubtitle) {
+            print('@@@@not');
+            return const SizedBox();
+          }
+          print('@@@@show');
           return Stack(
             children: <Widget>[
               Center(
@@ -63,7 +68,8 @@ class SubtitleTextView extends StatelessWidget {
             ],
           );
         }
-
+        print(
+            '@@@@ subtitle is ${state is LoadedSubtitle} state type?:${state.runtimeType}');
         return const SizedBox();
       },
     );

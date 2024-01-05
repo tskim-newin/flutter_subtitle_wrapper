@@ -47,25 +47,25 @@ void main() {
         ),
         act: (SubtitleBloc bloc) => bloc.add(
           UpdateLoadedSubtitle(
-            subtitle: const Subtitle(
-              startTime: Duration.zero,
-              endTime: Duration(
-                seconds: 10,
+              subtitle: const Subtitle(
+                startTime: Duration.zero,
+                endTime: Duration(
+                  seconds: 10,
+                ),
+                text: 'test',
               ),
-              text: 'test',
-            ),
-          ),
+              subtitleController: subtitleController),
         ),
         expect: () => [
-          const LoadedSubtitle(
-            Subtitle(
-              startTime: Duration.zero,
-              endTime: Duration(
-                seconds: 10,
+          LoadedSubtitle(
+              const Subtitle(
+                startTime: Duration.zero,
+                endTime: Duration(
+                  seconds: 10,
+                ),
+                text: 'test',
               ),
-              text: 'test',
-            ),
-          ),
+              showSubtitle: subtitleController.showSubtitles),
         ],
       );
 

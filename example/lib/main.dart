@@ -28,16 +28,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  late final SubtitleController subtitleController;
   final String link = SwConstants.videoUrl;
   late ChewieController _chewieController;
-  final SubtitleController subtitleController = SubtitleController(
-    subtitleUrl: SwConstants.enSubtitle,
-    subtitleDecoder: SubtitleDecoder.utf8,
-  );
 
   @override
   void initState() {
     _chewieController = chewieController;
+    subtitleController = SubtitleController(
+      subtitleUrl: SwConstants.enSubtitle,
+      subtitleDecoder: SubtitleDecoder.utf8,
+    );
     super.initState();
   }
 
@@ -190,11 +191,10 @@ class MyHomePageState extends State<MyHomePage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () => updateSubtitleUrl(
-                                  subtitleLanguage:
-                                      ExampleSubtitleLanguage.spanish,
-                                ),
-                                child: const Text('Switch to 🇪🇸'),
+                                onPressed: () {
+                                  subtitleController.toggleSubtitle();
+                                },
+                                child: const Text('toggle'),
                               ),
                               ElevatedButton(
                                 style: ButtonStyle(

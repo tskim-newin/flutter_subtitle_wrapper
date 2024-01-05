@@ -18,7 +18,8 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     on<LoadSubtitle>((event, emit) => loadSubtitle(emit: emit));
     on<InitSubtitles>((event, emit) => initSubtitles(emit: emit));
     on<UpdateLoadedSubtitle>(
-      (event, emit) => emit(LoadedSubtitle(event.subtitle)),
+      (event, emit) => emit(LoadedSubtitle(event.subtitle,
+          showSubtitle: subtitleController.showSubtitles)),
     );
     on<CompletedShowingSubtitles>(
       (event, emit) => emit(CompletedSubtitle()),
@@ -35,6 +36,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   Future<void> initSubtitles({
     required Emitter<SubtitleState> emit,
   }) async {
+    print('init subtitle');
     emit(SubtitleInitializing());
     subtitles = await subtitleRepository.getSubtitles();
     emit(SubtitleInitialized());
@@ -67,8 +69,8 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
           }
           add(
             UpdateLoadedSubtitle(
-              subtitle: _currentSubtitle,
-            ),
+                subtitle: _currentSubtitle,
+                subtitleController: subtitleController),
           );
         }
       },
