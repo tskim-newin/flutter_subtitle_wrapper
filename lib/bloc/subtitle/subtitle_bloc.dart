@@ -36,7 +36,6 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
   Future<void> initSubtitles({
     required Emitter<SubtitleState> emit,
   }) async {
-    print('init subtitle');
     emit(SubtitleInitializing());
     subtitles = await subtitleRepository.getSubtitles();
     emit(SubtitleInitialized());
