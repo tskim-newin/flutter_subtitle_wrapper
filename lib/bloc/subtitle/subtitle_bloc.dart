@@ -45,40 +45,13 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     required Emitter<SubtitleState> emit,
   }) async {
     emit(LoadingSubtitle());
-    videoPlayerController.addListener(
-      () {
-        final videoPlayerPosition = videoPlayerController.value.position;
-        if (subtitles.subtitles.isNotEmpty &&
-            videoPlayerPosition.inMilliseconds >
-                subtitles.subtitles.last.endTime.inMilliseconds) {
-          add(CompletedShowingSubtitles());
-        }
-        for (final subtitleItem in subtitles.subtitles) {
-          final validStartTime = videoPlayerPosition.inMilliseconds >
-              subtitleItem.startTime.inMilliseconds;
-          final validEndTime = videoPlayerPosition.inMilliseconds <
-              subtitleItem.endTime.inMilliseconds;
-          final subtitle = validStartTime && validEndTime ? subtitleItem : null;
-          if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
-            _currentSubtitle = subtitle;
-          } else if (!_currentSubtitleIsValid(
-            videoPlayerPosition: videoPlayerPosition.inMilliseconds,
-          )) {
-            _currentSubtitle = null;
-          }
-          add(
-            UpdateLoadedSubtitle(
-                subtitle: _currentSubtitle,
-                subtitleController: subtitleController),
-          );
-        }
-      },
-    );
+    videoPlayerController.addListener(_listener);
   }
 
   @override
   Future<void> close() {
     subtitleController.detach();
+    videoPlayerController.removeListener(_listener);
 
     return super.close();
   }
@@ -91,5 +64,32 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
         videoPlayerPosition < _currentSubtitle!.endTime.inMilliseconds;
 
     return validStartTime && validEndTime;
+  }
+
+  void _listener() {
+    final videoPlayerPosition = videoPlayerController.value.position;
+    if (subtitles.subtitles.isNotEmpty &&
+        videoPlayerPosition.inMilliseconds >
+            subtitles.subtitles.last.endTime.inMilliseconds) {
+      add(CompletedShowingSubtitles());
+    }
+    for (final subtitleItem in subtitles.subtitles) {
+      final validStartTime = videoPlayerPosition.inMilliseconds >
+          subtitleItem.startTime.inMilliseconds;
+      final validEndTime = videoPlayerPosition.inMilliseconds <
+          subtitleItem.endTime.inMilliseconds;
+      final subtitle = validStartTime && validEndTime ? subtitleItem : null;
+      if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
+        _currentSubtitle = subtitle;
+      } else if (!_currentSubtitleIsValid(
+        videoPlayerPosition: videoPlayerPosition.inMilliseconds,
+      )) {
+        _currentSubtitle = null;
+      }
+      add(
+        UpdateLoadedSubtitle(
+            subtitle: _currentSubtitle, subtitleController: subtitleController),
+      );
+    }
   }
 }

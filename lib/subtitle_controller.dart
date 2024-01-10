@@ -56,9 +56,9 @@ class SubtitleController {
     }
   }
 
-  void toggleSubtitle() {
+  void toggleSubtitle({bool? showSubtitles}) {
     if (_attached) {
-      showSubtitles = !showSubtitles;
+      this.showSubtitles = showSubtitles ?? !this.showSubtitles;
       _subtitleBloc!.add(
         UpdateLoadedSubtitle(
           subtitleController: this,
