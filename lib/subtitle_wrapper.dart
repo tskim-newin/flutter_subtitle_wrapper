@@ -50,6 +50,7 @@ class SubtitleWrapper extends StatelessWidget {
               child: SubtitleTextView(
                 subtitleStyle: subtitleStyle,
                 backgroundColor: backgroundColor,
+                textScaler: textScaler,
               ),
             ),
           )
