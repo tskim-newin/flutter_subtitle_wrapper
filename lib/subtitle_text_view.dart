@@ -9,9 +9,11 @@ class SubtitleTextView extends StatelessWidget {
     required this.subtitleStyle,
     super.key,
     this.backgroundColor,
+    this.textScaler,
   });
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
+  final TextScaler? textScaler;
 
   TextStyle get _textStyle {
     return subtitleStyle.hasBorder
@@ -60,6 +62,7 @@ class SubtitleTextView extends StatelessWidget {
               child: _TextContent(
                 text: state.subtitle!.text,
                 textStyle: _textStyle,
+                textScaler: textScaler,
               ),
             ),
           );
@@ -74,10 +77,12 @@ class _TextContent extends StatelessWidget {
   const _TextContent({
     required this.textStyle,
     required this.text,
+    this.textScaler,
   });
 
   final TextStyle textStyle;
   final String text;
+  final TextScaler? textScaler;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +91,7 @@ class _TextContent extends StatelessWidget {
       key: ViewKeys.subtitleTextContent,
       textAlign: TextAlign.center,
       style: textStyle,
+      textScaler: textScaler,
     );
   }
 }

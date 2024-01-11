@@ -13,6 +13,7 @@ class SubtitleWrapper extends StatelessWidget {
     this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
     this.headers,
+    this.textScaler,
   });
   final Map<String, String>? headers;
   final Widget videoChild;
@@ -20,6 +21,7 @@ class SubtitleWrapper extends StatelessWidget {
   final VideoPlayerController videoPlayerController;
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
+  final TextScaler? textScaler;
 
   @override
   Widget build(BuildContext context) {
