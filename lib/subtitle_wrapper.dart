@@ -14,6 +14,8 @@ class SubtitleWrapper extends StatelessWidget {
     this.backgroundColor,
     this.headers,
     this.textScaler,
+    this.maxLines,
+    this.overflow,
   });
   final Map<String, String>? headers;
   final Widget videoChild;
@@ -22,6 +24,8 @@ class SubtitleWrapper extends StatelessWidget {
   final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
   final TextScaler? textScaler;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +55,8 @@ class SubtitleWrapper extends StatelessWidget {
                 subtitleStyle: subtitleStyle,
                 backgroundColor: backgroundColor,
                 textScaler: textScaler,
+                maxLines: maxLines,
+                overflow: overflow,
               ),
             ),
           )

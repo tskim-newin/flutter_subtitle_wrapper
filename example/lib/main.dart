@@ -89,6 +89,8 @@ class MyHomePageState extends State<MyHomePage> {
             child: SizedBox(
               height: 270,
               child: SubtitleWrapper(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 videoPlayerController: _chewieController.videoPlayerController,
                 subtitleController: subtitleController,
                 subtitleStyle: const SubtitleStyle(
